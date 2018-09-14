@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 데이터베이스 접속정보를 저장할 DataSource 빈 -->
+	<!-- <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" 
+		id="dataSource"> <property value="oracle.jdbc.driver.OracleDriver" name="driverClassName" 
+		/> <property value="jdbc:oracle:thin:@192.168.10.101:1521:xe" name="url" 
+		/> <property value="user03" name="username" /> <property value="user03" name="password" 
+		/> </bean> -->
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="dataSource">
+		<property value="com.mysql.jdbc.Driver"
+			name="driverClassName" />
+		<property
+			value="jdbc:mysql://localhost:3306/shenah?serverTimezone=UTC"
+			name="url" />
+		<property value="root" name="username" />
+		<property value="shenaihua" name="password" />
+	</bean>
+	
+	<!-- Mybatis 설정 정보를 저장하는 클래스의 bean -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean"
+		id="sqlSessionFactory">
+		<property name="dataSource" ref="dataSource" />
+		<!-- Mybatis 환경설정 파일 위치 정보 설정 -->
+		<property value="classpath:/mybatis/mybatis-config.xml"
+			name="configLocation" />
+	</bean>
+
+
+</beans>

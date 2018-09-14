@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="good">
+	<select id="selectall" resultType="com.mybatis.domain.Goods">
+		select * from goods
+	</select>
+	
+	<select id="col" resultType="java.lang.String">
+		select name from goods
+	</select>
+	
+	<select id="select" resultType="com.mybatis.domain.Goods">
+		select * from goods where code = #{code}
+	</select>
+	
+	<insert id="insertgood" parameterType="com.mybatis.domain.Goods">
+		insert into goods(code, name, price, description) values(#{code}, #{name}, #{price}, #{description})
+	</insert>
+</mapper>
