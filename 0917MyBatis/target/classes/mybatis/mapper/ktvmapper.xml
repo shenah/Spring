@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ktv">
+	<!-- ktv 테이블의 전체 데이터 가져오는 SQL -->
+	<select id="selectAll" resultType="KTVVO">
+		select * from ktv
+	</select>
+	
+	<!-- idnum로 데이터를 조회하는 SQL -->
+	<select id="selectId" resultType="KTVVO" parameterType="java.lang.String">
+		select * from ktv where idnum=#{idnum}
+	</select>
+	
+	<!-- 데이터를 삽입하는 SQL -->
+	<insert id="insertktv" parameterType="KTVVO">
+		insert into KTV values(#{company}, #{idnum}, #{representative}, #{room}, #{phone}, #{addr})
+	</insert>
+	
+	<!-- procedure -->
+	<insert id="insertprocedure" parameterType="KTVVO" statementType="CALLABLE">
+		call insertktv(#{company}, #{idnum}, #{representative}, #{room}, #{phone}, #{addr})
+	</insert>
+</mapper>

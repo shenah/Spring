@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+	
+		<!-- MySQL 접속 객체 만들기 -->
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="dataSource">
+		<property value="com.mysql.jdbc.Driver"
+			name="driverClassName" />
+		<property value="jdbc:mysql://localhost:3306/shenah?serverTimezone=UTC"
+			name="url" />
+		<property value="root" name="username" />
+		<property value="shenaihua" name="password" />
+	</bean>
+	
+		<!-- Mybatis 설정 정보를 저장하는 bean -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean"
+		id="sqlSessionFactory">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="ktvInterface" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.shenah.mybatis.dao.KTVInterface"/>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+<!-- 		<property value="classpath:/mybatis/mybatis-config.xml"
+			name="configLocation" />
+
+		<property value="classpath:/mybatis/mapper/ktvmapper.xml"
+			name="mapperLocations" />	
+	</bean>	
+	
+	<bean class="org.mybatis.spring.SqlSessionTemplate"
+		id="sqlSession" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory"
+			ref="sqlSessionFactory" />
+	</bean>-->
+
+	<context:annotation-config />
+
+	<!-- annotation 설정된 클래스들의 bean을 자동으로 설정 -->
+	<context:component-scan
+		base-package="com.shenah.mybatis"/>
+	
+	
+</beans>

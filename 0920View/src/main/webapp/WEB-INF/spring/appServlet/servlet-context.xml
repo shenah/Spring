@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<annotation-driven />
+
+	<default-servlet-handler />
+	
+	<resources mapping="/resources/**" location="/resources/" />
+	
+	<!-- controller가 뷰이름을 리턴하면 뷰이름을 조합해서 html로 출력하도록 해주는 설정 order 프로퍼티 추가 -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1"/>
+	</beans:bean>
+
+	<!-- View 이름을 가지고 출력하는 뷰를 선택할 수 있도록 하는 설정 별도로 추가 -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"/>
+	</beans:bean>
+	
+	<!-- programming 이라는 뷰이름이 왔을때 ExcelView로 출력 -->
+	<beans:bean id="programming" class="com.shen.view.service.ExcelView" />
+	
+	<!-- programming language이라는 뷰이름이 왔을때 PDFView로 출력  -->
+	<beans:bean id="programming language" class="com.shen.view.service.PDFView" />
+	
+	<!-- jsonview이라는 뷰이름이 왔을때 MappingJackson2JsonView로 출력  -->
+	<beans:bean id="jsonview" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+	
+	<context:component-scan
+		base-package="com.shen.view" />
+
+
+
+</beans:beans>
